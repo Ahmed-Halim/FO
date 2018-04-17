@@ -268,7 +268,7 @@ namespace Indexing
                 {
                     String recordString = new String(record);
                     String id = recordString.Substring(isDeletedLen, studentIDLen);
-                    if (input == id)
+                    if (input == id.Trim('\0'))
                     {
                         sr.Close();
                         fs.Close();
@@ -335,6 +335,41 @@ namespace Indexing
             else
             {
                 Console.WriteLine("ID " + input + " is not found.");
+            }
+        }
+
+        public static void saveToAvailable()
+        {
+            if (File.Exists("Available.txt"))
+            {
+                File.Delete("Available.txt");
+            }
+
+            FileStream fs = new FileStream("Available.txt", FileMode.Append);
+            StreamWriter sw = new StreamWriter(fs);
+
+            foreach (int i in Available) {
+                sw.WriteLine(i.ToString());
+            }
+
+            sw.Close();
+            fs.Close();
+        }
+
+        public static void loadFromAvailable()
+        {
+            if (File.Exists("Available.txt"))
+            {
+                FileStream fs = new FileStream("Available.txt", FileMode.Open);
+                StreamReader sr = new StreamReader(fs);
+
+                while (sr.Peek() != -1)
+                {
+                    Available.AddLast(int.Parse(sr.ReadLine()));
+                }
+
+                sr.Close();
+                fs.Close();
             }
         }
 
