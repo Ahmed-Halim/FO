@@ -1,9 +1,10 @@
 using System;
-namespace e
+
+namespace FO
 {
-    class Program
+    class Encoding
     {
-        public static string encode(string text)
+        public static string Encode(string text)
         {
             int start = 0, Length = text.Length;
             string ans = "";
@@ -21,7 +22,7 @@ namespace e
             return ans;
         }
 
-        public static string decode(string text)
+        public static string Decode(string text)
         {
             string ans = "";
             for (int i = 0; i < text.Length; i++)
@@ -43,8 +44,8 @@ namespace e
         {
             Console.Write("Enter text to be encoded: ");
             String text = Console.ReadLine();
-            String encoded = encode(text);
-            String decoded = decode(encoded);
+            String encoded = Encode(text);
+            String decoded = Decode(encoded);
             Console.WriteLine("Encoded: " + encoded);
             Console.WriteLine("Decoded: " + decoded);
         }
