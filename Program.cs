@@ -10,7 +10,8 @@ namespace Indexing
             SecondaryIndex.loadFromFile();
             Student_Fixed.loadFromAvailable();
 
-            if (Student_Fixed.Available.Count == 0) Student_Fixed.Available.AddFirst(-1);
+            if (Student_Fixed.Available.Count == 0) 
+                Student_Fixed.Available.AddFirst(-1);
             
             String Q = "y";
             do

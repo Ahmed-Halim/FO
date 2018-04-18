@@ -19,6 +19,13 @@ namespace Indexing
             this.recordNumber = recordNumber;
         }
 
+        public void add(String key)
+        {
+            this.primaryKey = key;
+            this.recordNumber = file.Count;
+            file.Add(this);
+        }
+
         public void update(int recordNumber, String newKey)
         {
             for (int i = 0; i < file.Count; i++)
@@ -29,13 +36,6 @@ namespace Indexing
                     break;
                 }
             }
-        }
-
-        public void add(String key)
-        {
-            this.primaryKey = key;
-            this.recordNumber = file.Count;
-            file.Add(this);
         }
 
         public static int getStudentByID(String key)
