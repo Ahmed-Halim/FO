@@ -38,12 +38,11 @@ namespace Indexing
             file.Add(this);
         }
 
-
         public static int getStudentByID(String key)
         {
             for (int i = 0; i < file.Count; i++)
             {
-                if (key == file[i].primaryKey)
+                if (key == file[i].primaryKey.Trim('\0'))
                 {
                     return file[i].recordNumber;
                 }
@@ -64,29 +63,8 @@ namespace Indexing
             for (int i = 0; i < file.Count; i++)
             {
                 
-                String KEY = file[i].primaryKey;
-                int RN = file[i].recordNumber;
-
-                char[] primaryKey;
-                int primaryKeyLen = 6;
-
-                char[] recordNumber;
-                int valueLen = 4;
-
-                char[] record;
-                int recordLen = 10;
-
-                primaryKey = new char[primaryKeyLen];
-                recordNumber = new char[valueLen];
-                record = new char[recordLen];
-
-                KEY.CopyTo(0, primaryKey, 0, KEY.Length);
-                RN.ToString().CopyTo(0, recordNumber, 0, RN.ToString().Length);
-
-                primaryKey.CopyTo(record, 0);
-                recordNumber.CopyTo(record, primaryKeyLen);
-
-                sw.Write(record);
+                String current = file[i].primaryKey + " " + file[i].recordNumber.ToString();
+                sw.WriteLine(current);
 
             }
 
@@ -103,18 +81,10 @@ namespace Indexing
 
                 while (sr.Peek() != -1)
                 {
-                    int primaryKeyLen = 6;
-                    int recordNumberLen = 4;
-                    int recordLen = 10;
+                    
+                    string[] splitted = sr.ReadLine().Split(' ');
+                    file.Add(new PrimaryIndex(splitted[0], int.Parse(splitted[1])));
 
-                    char[] record = new char[recordLen];
-
-                    sr.Read(record, 0, recordLen);
-
-                    String key = new String(record).Substring(0, primaryKeyLen);
-                    int rn = int.Parse(new String(record).Substring(primaryKeyLen, recordNumberLen));
-
-                    file.Add(new PrimaryIndex(key, rn));
                 }
 
                 sr.Close();

@@ -25,6 +25,18 @@ namespace Indexing
             file.Add(new SecondaryIndex(primaryKey, secondaryKey));
         }
 
+        public void update(string primaryKey, String secondaryKey)
+        {
+            for (int i = 0; i < file.Count; i++)
+            {
+                if (file[i].primaryKey == primaryKey)
+                {
+                    file[i].secondaryKey = secondaryKey;
+                    break;
+                }
+            }
+        }
+
         public static List<String> getStudentsByName(String name)
         {
             List<String> result = new List<String>();
@@ -50,31 +62,9 @@ namespace Indexing
 
             for (int i = 0; i < file.Count; i++)
             {
-                String PK = file[i].primaryKey;
-                String SK = file[i].secondaryKey;
 
-                char[] PKchar;
-                int primaryKeyLen = 6;
-
-                char[] SKchar;
-                int secondaryKeyLen = 20;
-
-                char[] record;
-                int recordLen = 26;
-
-                PKchar = new char[primaryKeyLen];
-                SKchar = new char[secondaryKeyLen];
-                record = new char[recordLen];
-
-                PK.CopyTo(0, PKchar, 0, PK.Length);
-                SK.CopyTo(0, SKchar, 0, SK.Length);
-
-
-                SKchar.CopyTo(record, 0);
-                PKchar.CopyTo(record, primaryKeyLen);
-
-
-                sw.Write(record);
+                String current = file[i].primaryKey + " " + file[i].secondaryKey;
+                sw.WriteLine(current);
 
             }
 
@@ -91,19 +81,10 @@ namespace Indexing
 
                 while (sr.Peek() != -1)
                 {
+                    
+                    string[] splitted = sr.ReadLine().Split(' ');
+                    file.Add(new SecondaryIndex(splitted[0], splitted[1]));
 
-                    int primaryKeyLen = 6;
-                    int secondaryKeyLen = 20;
-                    int recordLen = 26;
-
-                    char[] record = new char[recordLen];
-
-                    sr.Read(record, 0, recordLen);
-
-                    String primaryKey = new String(record).Substring(0, primaryKeyLen);
-                    String secondaryKey = new String(record).Substring(primaryKeyLen, secondaryKeyLen);
-
-                    file.Add(new SecondaryIndex(primaryKey, secondaryKey));
                 }
             }
         }

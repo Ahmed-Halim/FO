@@ -255,6 +255,7 @@ namespace Indexing
 
         public int getStudentRecordNumber(String input)
         {
+            
             FileStream fs = new FileStream("Fixed.txt", FileMode.Open);
             StreamReader sr = new StreamReader(fs);
 
@@ -329,6 +330,9 @@ namespace Indexing
 
                 sw.Close();
                 fs.Close();
+
+                SecondaryIndex si = new SecondaryIndex();
+                si.update(new string(studentID),new string(studentName));
 
                 Console.WriteLine("Student updated");
             }
