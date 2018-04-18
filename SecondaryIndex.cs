@@ -6,7 +6,7 @@ namespace Indexing
 {
     class SecondaryIndex
     {
-        public static List<SecondaryIndex> file = new List<SecondaryIndex>();
+        public static List<SecondaryIndex> Sfile = new List<SecondaryIndex>();
 
         String primaryKey;
         String secondaryKey;
@@ -22,16 +22,16 @@ namespace Indexing
 
         public static void add(String primaryKey, String secondaryKey)
         {
-            file.Add(new SecondaryIndex(primaryKey, secondaryKey));
+            Sfile.Add(new SecondaryIndex(primaryKey, secondaryKey));
         }
 
-        public void update(string primaryKey, String secondaryKey)
+        public static void update(String primaryKey, String secondaryKey)
         {
-            for (int i = 0; i < file.Count; i++)
+            for (int i = 0; i < Sfile.Count; i++)
             {
-                if (file[i].primaryKey == primaryKey)
+                if (Sfile[i].primaryKey == primaryKey)
                 {
-                    file[i].secondaryKey = secondaryKey;
+                    Sfile[i].secondaryKey = secondaryKey;
                     break;
                 }
             }
@@ -41,11 +41,11 @@ namespace Indexing
         {
             List<String> result = new List<String>();
 
-            for (int i = 0; i < file.Count; i++)
+            for (int i = 0; i < Sfile.Count; i++)
             {
-                if (file[i].secondaryKey.Trim('\0') == name)
+                if (Sfile[i].secondaryKey.Trim('\0') == name)
                 {
-                    result.Add(file[i].primaryKey);
+                    result.Add(Sfile[i].primaryKey);
                 }
 
             }
@@ -60,10 +60,10 @@ namespace Indexing
             FileStream fs = new FileStream("Secondary.txt", FileMode.Append);
             StreamWriter sw = new StreamWriter(fs);
 
-            for (int i = 0; i < file.Count; i++)
+            for (int i = 0; i < Sfile.Count; i++)
             {
 
-                String current = file[i].primaryKey + " " + file[i].secondaryKey;
+                String current = Sfile[i].primaryKey + " " + Sfile[i].secondaryKey;
                 sw.WriteLine(current);
 
             }
@@ -83,7 +83,7 @@ namespace Indexing
                 {
                     
                     string[] splitted = sr.ReadLine().Split(' ');
-                    file.Add(new SecondaryIndex(splitted[0], splitted[1]));
+                    Sfile.Add(new SecondaryIndex(splitted[0], splitted[1]));
 
                 }
             }

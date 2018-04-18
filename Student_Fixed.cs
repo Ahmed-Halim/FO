@@ -83,9 +83,8 @@ namespace Indexing
                 sw = new StreamWriter(fs);
                 sw.BaseStream.Seek(AvailableRecord * recordLen, SeekOrigin.Begin);
 
-                PrimaryIndex pi = new PrimaryIndex();
-                pi.update(AvailableRecord, new String(studentID));
-                SecondaryIndex.add(new String(studentID), new String(studentName));
+                PrimaryIndex.update(AvailableRecord, new String(studentID));
+                SecondaryIndex.add(new String(studentID) , new String(studentName));
 
                 Available.RemoveFirst();
             }
@@ -94,9 +93,7 @@ namespace Indexing
                 fs = new FileStream("Fixed.txt", FileMode.Append);
                 sw = new StreamWriter(fs);
 
-                PrimaryIndex PI = new PrimaryIndex();
-                PI.add(new String(studentID));
-
+                PrimaryIndex.add(new String(studentID));
                 SecondaryIndex.add(new String(studentID), new String(studentName));
             }
 
@@ -331,8 +328,7 @@ namespace Indexing
                 sw.Close();
                 fs.Close();
 
-                SecondaryIndex si = new SecondaryIndex();
-                si.update(new string(studentID),new string(studentName));
+                SecondaryIndex.update(new string(studentID),new string(studentName));
 
                 Console.WriteLine("Student updated");
             }

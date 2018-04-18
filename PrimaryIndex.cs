@@ -6,7 +6,7 @@ namespace Indexing
 {
     class PrimaryIndex {
 
-        public static List<PrimaryIndex> file = new List<PrimaryIndex>();
+        public static List<PrimaryIndex> Pfile = new List<PrimaryIndex>();
         
         private String primaryKey;
         private int recordNumber;
@@ -19,20 +19,19 @@ namespace Indexing
             this.recordNumber = recordNumber;
         }
 
-        public void add(String key)
+        public static void add(String primaryKey)
         {
-            this.primaryKey = key;
-            this.recordNumber = file.Count;
-            file.Add(this);
+            int recordNumber = Pfile.Count;
+            Pfile.Add(new PrimaryIndex(primaryKey, recordNumber));
         }
 
-        public void update(int recordNumber, String newKey)
+        public static void update(int recordNumber, String newKey)
         {
-            for (int i = 0; i < file.Count; i++)
+            for (int i = 0; i < Pfile.Count; i++)
             {
-                if (file[i].recordNumber == recordNumber)
+                if (Pfile[i].recordNumber == recordNumber)
                 {
-                    file[i].primaryKey = newKey;
+                    Pfile[i].primaryKey = newKey;
                     break;
                 }
             }
@@ -40,11 +39,11 @@ namespace Indexing
 
         public static int getStudentByID(String key)
         {
-            for (int i = 0; i < file.Count; i++)
+            for (int i = 0; i < Pfile.Count; i++)
             {
-                if (key == file[i].primaryKey.Trim('\0'))
+                if (key == Pfile[i].primaryKey)
                 {
-                    return file[i].recordNumber;
+                    return Pfile[i].recordNumber;
                 }
             }
             return -1;
@@ -52,18 +51,16 @@ namespace Indexing
 
         public static void saveToFile()
         {
-            if (File.Exists("Primary.txt"))
-            {
-                File.Delete("Primary.txt");
-            }
+            
+            File.Delete("Primary.txt");
 
             FileStream fs = new FileStream("Primary.txt", FileMode.Append);
             StreamWriter sw = new StreamWriter(fs);
 
-            for (int i = 0; i < file.Count; i++)
+            for (int i = 0; i < Pfile.Count; i++)
             {
                 
-                String current = file[i].primaryKey + " " + file[i].recordNumber.ToString();
+                String current = Pfile[i].primaryKey + " " + Pfile[i].recordNumber.ToString();
                 sw.WriteLine(current);
 
             }
@@ -83,7 +80,7 @@ namespace Indexing
                 {
                     
                     string[] splitted = sr.ReadLine().Split(' ');
-                    file.Add(new PrimaryIndex(splitted[0], int.Parse(splitted[1])));
+                    Pfile.Add(new PrimaryIndex(splitted[0], int.Parse(splitted[1])));
 
                 }
 
